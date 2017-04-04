@@ -14,12 +14,18 @@ const SkillTagBox = React.createClass({
       }.bind(this)
     })
   },
+  
+  handleSkillTagSubmit: function(skillTag) {
+    console.log(skillTag)
+  },
    
   render: function() {
     return (
       <div className='skillTagBox'>
         <h2>AddedSkillTags</h2>
-        <SkillAddButton />
+        <SkillAddButton
+          handleSkillTagSubmit={this.handleSkillTagSubmit}
+        />
         <AddedSkillTagList 
           addedSkillTags={this.state.user.added_skill_tags}
         />
@@ -53,10 +59,15 @@ const AddedSkillTag = React.createClass({
 });
 
 const SkillAddButton = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault()
+    this.props.handleSkillTagSubmit(this.newSkillTag.value.trim())
+  },
+
   render: function() {
     return (
-      <form className='skillForm'>
-        <input type='text' placeholder='your new skill' />
+      <form className='skillForm' onSubmit={this.handleSubmit}>
+        <input type='text' placeholder='your new skill' ref={(ref) => this.newSkillTag = ref} />
         <input type='submit' value='Add' />
       </form>
     )
