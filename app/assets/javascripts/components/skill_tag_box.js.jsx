@@ -1,16 +1,27 @@
 const SkillTagBox = React.createClass({
   getInitialState: function() {
-    return {addedSkillTags: this.props.skill_tags}
+    return { user: { id: '', name: '', added_skill_tags: [] } }
+  },
+
+  componentDidMount: function() {
+    $.ajax({
+      url: `/api/v1${location.pathname}`,
+      dataType: 'json',
+      success: function(result) {
+        this.setState({user: result})
+      }.bind(this),
+      error: function(xhr, status, err) {
+      }.bind(this)
+    })
   },
    
   render: function() {
-    console.log(this.state)
     return (
       <div className='skillTagBox'>
         <h2>AddedSkillTags</h2>
         <SkillAddButton />
         <AddedSkillTagList 
-          addedSkillTags={this.state.addedSkillTags}
+          addedSkillTags={this.state.user.added_skill_tags}
         />
       </div>
     );
@@ -37,7 +48,7 @@ const AddedSkillTagList = React.createClass({
 const AddedSkillTag = React.createClass({
   render: function() {
     const { addedSkillTag } = this.props
-    return <li key={addedSkillTag.id}>{addedSkillTag.name}</li>;
+    return <li key={addedSkillTag.id}>{addedSkillTag.count} {addedSkillTag.name}</li>;
   }
 });
 

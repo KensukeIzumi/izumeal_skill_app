@@ -1,3 +1,6 @@
 <h1>Profile</h1>
 <h2>Name: <%= @user.name %></h2>
-<%= react_component('SkillTagBox', { skill_tags: @user.skill_tags }, { prerender: true }) %>
+<%= react_component('SkillTagBox') %>
+<script>
+  ReactRailsUJS.mountComponents()
+</script>
