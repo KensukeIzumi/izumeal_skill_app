@@ -1,6 +1,9 @@
 const SkillTagBox = React.createClass({
   getInitialState: function() {
-    return { user: { id: '', name: '', added_skill_tags: [] } }
+    return { 
+      user: { id: '', name: '', added_skill_tags: [] },
+      currentUser: this.props.current_user,
+    }
   },
 
   componentDidMount: function() {
@@ -16,10 +19,36 @@ const SkillTagBox = React.createClass({
   },
   
   handleSkillTagSubmit: function(skillTag) {
-    console.log(skillTag)
+    $.ajax({
+      url: `/api/v1/skill_tags`,
+      dataType: 'json',
+      type: 'POST',
+      data: {
+        user_id: this.state.user.id,
+        added_by: this.state.currentUser.id,
+        skill_tag: skillTag,
+      },
+      success: function(result) {
+        console.log('success')
+        console.log(result)
+        if (result !== null) {
+          this.setState(Object.assign({}, this.state, {
+            user: { 
+              id: this.state.user.id,
+              name: this.state.user.name,
+              added_skill_tags: [...this.state.user.added_skill_tags, result],
+            }
+          }))
+        } 
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.log(err)
+      }.bind(this)
+    })
   },
    
   render: function() {
+    console.log(this.state)
     return (
       <div className='skillTagBox'>
         <h2>AddedSkillTags</h2>

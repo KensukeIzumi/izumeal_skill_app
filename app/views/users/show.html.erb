@@ -1,6 +1,6 @@
 <h1>Profile</h1>
 <h2>Name: <%= @user.name %></h2>
-<%= react_component('SkillTagBox') %>
+<%= react_component('SkillTagBox', current_user: current_user) %>
 <script>
   ReactRailsUJS.mountComponents()
 </script>
