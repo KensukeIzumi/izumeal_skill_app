@@ -65,10 +65,13 @@ const SkillTagBox = React.createClass({
 
 const AddedSkillTagList = React.createClass({
   render: function() {
+    addedSkillTagsSortedByCount = this.props.addedSkillTags.sort(function(a, b) {
+      return (a.count > b.count) ? -1 : 1
+    })
     return (
       <div className='addedSkillTagList'>
         <ul>
-          {this.props.addedSkillTags.map((addedSkillTag, index) => {
+          {addedSkillTagsSortedByCount.map((addedSkillTag, index) => {
             return (<AddedSkillTag
               key={addedSkillTag.id}
               addedSkillTag={addedSkillTag}

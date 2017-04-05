@@ -4,7 +4,11 @@ module Api
       def create
         skill_tag = SkillTag.new(name: skill_tag_params[:skill_tag])
         if skill_tag.save
-          user_skill_tag = UserSkillTag.new(user_id: skill_tag_params[:user_id], added_by: skill_tag_params[:added_by], skill_tag_id: skill_tag.id)
+          user_skill_tag = UserSkillTag.new(
+            user_id: skill_tag_params[:user_id],
+            added_by: skill_tag_params[:added_by],
+            skill_tag_id: skill_tag.id
+          )
           if user_skill_tag.save
             @added_skill_tag = {
               id: skill_tag.id,
