@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       resources :skill_tags
+      resources :user_skill_tags
     end
   end
 end
