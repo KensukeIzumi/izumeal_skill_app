@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
-  def new
-  end
+  skip_before_action :check_user_session
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
