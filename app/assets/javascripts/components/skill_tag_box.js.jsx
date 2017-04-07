@@ -17,20 +17,14 @@ const SkillTagBox = React.createClass({
       }.bind(this)
     })
   },
-  
-  handleSkillTagSubmit: function(skillTag) {
+
+  callPostApi: function(url, data) {
     $.ajax({
-      url: `/api/v1/skill_tags`,
+      url: url,
       dataType: 'json',
       type: 'POST',
-      data: {
-        user_id: this.state.user.id,
-        added_by: this.state.currentUser.id,
-        skill_tag: skillTag,
-      },
+      data: data,
       success: function(result) {
-        console.log('success')
-        console.log(result)
         if (result !== null) {
           this.setState(Object.assign({}, this.state, {
             user: { 
@@ -45,37 +39,27 @@ const SkillTagBox = React.createClass({
         console.log(err)
       }.bind(this)
     })
+  },
+  
+  handleSkillTagSubmit: function(skillTag) {
+    const data = {
+      user_id: this.state.user.id,
+      added_by: this.state.currentUser.id,
+      skill_tag: skillTag,
+    }
+    this.callPostApi(`/api/v1/skill_tags`, data)
   },
 
   handleAddSkillCount: function(skillTagId) {
-    $.ajax({
-      url: `/api/v1/user_skill_tags`,
-      dataType: 'json',
-      type: 'POST',
-      data: {
-        user_id: this.state.user.id,
-        added_by: this.state.currentUser.id,
-        skill_tag_id: skillTagId,
-      },
-      success: function(result) {
-        if (result !== null) {
-          this.setState(Object.assign({}, this.state, {
-            user: { 
-              id: this.state.user.id,
-              name: this.state.user.name,
-              added_skill_tags: [...this.state.user.added_skill_tags, result],
-            }
-          }))
-        } 
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.log(err)
-      }.bind(this)
-    })
+    const data = {
+      user_id: this.state.user.id,
+      added_by: this.state.currentUser.id,
+      skill_tag_id: skillTagId,
+    }
+    this.callPostApi(`/api/v1/user_skill_tags`, data)
   },
 
   render: function() {
-    console.log(this.state)
     return (
       <div className='skillTagBox'>
         <h2>AddedSkillTags</h2>
