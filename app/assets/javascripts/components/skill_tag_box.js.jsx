@@ -46,7 +46,39 @@ const SkillTagBox = React.createClass({
       }.bind(this)
     })
   },
-   
+
+  handleAddSkillCount: function(skillTagId) {
+    console.log(skillTagId)
+    /*
+    $.ajax({
+      url: `/api/v1/user_skill_tags`,
+      dataType: 'json',
+      type: 'POST',
+      data: {
+        user_id: this.state.user.id,
+        added_by: this.state.currentUser.id,
+        skill_tag_id: skillTagId,
+      },
+      success: function(result) {
+        console.log('success')
+        console.log(result)
+        if (result !== null) {
+          this.setState(Object.assign({}, this.state, {
+            user: { 
+              id: this.state.user.id,
+              name: this.state.user.name,
+              added_skill_tags: [...this.state.user.added_skill_tags, result],
+            }
+          }))
+        } 
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.log(err)
+      }.bind(this)
+    })
+    */
+  },
+
   render: function() {
     console.log(this.state)
     return (
@@ -54,9 +86,13 @@ const SkillTagBox = React.createClass({
         <h2>AddedSkillTags</h2>
         <SkillAddButton
           handleSkillTagSubmit={this.handleSkillTagSubmit}
+          handleAddSkillCount={this.handleAddSkillCount}
         />
         <AddedSkillTagList 
           addedSkillTags={this.state.user.added_skill_tags}
+          userId={this.state.user.id}
+          currentUserId={this.state.currentUser.id}
+          handleAddSkillCount={this.handleAddSkillCount}
         />
       </div>
     );
@@ -75,6 +111,9 @@ const AddedSkillTagList = React.createClass({
             return (<AddedSkillTag
               key={addedSkillTag.id}
               addedSkillTag={addedSkillTag}
+              userId={this.props.userId}
+              currentUserId={this.props.currentUserId}
+              handleAddSkillCount={this.props.handleAddSkillCount}
             />)
           })}
         </ul>
@@ -84,9 +123,22 @@ const AddedSkillTagList = React.createClass({
 });
 
 const AddedSkillTag = React.createClass({
+  renderAddSkillCount: function() {
+    if (this.props.userId !== this.props.currentUserId) {
+      return (
+        <SkillCountAddButton 
+          skillTagId={this.props.addedSkillTag.id}
+          handleAddSkillCount={this.props.handleAddSkillCount}
+        />
+      )
+    } else {
+      return null
+    }
+  },
+   
   render: function() {
     const { addedSkillTag } = this.props
-    return <li key={addedSkillTag.id}>{addedSkillTag.count} {addedSkillTag.name}</li>;
+    return <li key={addedSkillTag.id}>{addedSkillTag.count} {addedSkillTag.name} { this.renderAddSkillCount() }</li>;
   }
 });
 
@@ -102,6 +154,19 @@ const SkillAddButton = React.createClass({
         <input type='text' placeholder='your new skill' ref={(ref) => this.newSkillTag = ref} />
         <input type='submit' value='Add' />
       </form>
+    )
+  }
+})
+
+const SkillCountAddButton = React.createClass({
+  handleClick: function(e) {
+    e.preventDefault()
+    this.props.handleAddSkillCount(this.props.skillTagId)
+  },
+
+  render: function() {
+    return (
+      <button onClick={this.handleClick} >+plus!</button>
     )
   }
 })
