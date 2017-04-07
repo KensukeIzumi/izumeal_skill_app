@@ -48,8 +48,6 @@ const SkillTagBox = React.createClass({
   },
 
   handleAddSkillCount: function(skillTagId) {
-    console.log(skillTagId)
-    /*
     $.ajax({
       url: `/api/v1/user_skill_tags`,
       dataType: 'json',
@@ -60,8 +58,6 @@ const SkillTagBox = React.createClass({
         skill_tag_id: skillTagId,
       },
       success: function(result) {
-        console.log('success')
-        console.log(result)
         if (result !== null) {
           this.setState(Object.assign({}, this.state, {
             user: { 
@@ -76,7 +72,6 @@ const SkillTagBox = React.createClass({
         console.log(err)
       }.bind(this)
     })
-    */
   },
 
   render: function() {

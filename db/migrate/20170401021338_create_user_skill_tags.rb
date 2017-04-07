@@ -7,6 +7,6 @@ class CreateUserSkillTags < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_index :user_skill_tags, :user_id
+    add_index :user_skill_tags, [:user_id, :skill_tag_id, :added_by], unique: true
   end
 end
