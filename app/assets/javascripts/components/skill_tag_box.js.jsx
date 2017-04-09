@@ -131,7 +131,7 @@ const SkillAddButton = React.createClass({
     return (
       <form className='skillForm' onSubmit={this.handleSubmit}>
         <input type='text' placeholder='your new skill' ref={(ref) => this.newSkillTag = ref} />
-        <input type='submit' value='Add' />
+        <input type='submit' className='btn btn-primary' value='Add' />
       </form>
     )
   }
@@ -145,7 +145,7 @@ const SkillCountAddButton = React.createClass({
 
   render: function() {
     return (
-      <button onClick={this.handleClick} >+plus!</button>
+      <button className='btn' onClick={this.handleClick} >+plus!</button>
     )
   }
 })

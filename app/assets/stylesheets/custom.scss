@@ -51,6 +51,15 @@ p {
   line-height: 1.7em;
 }
 
+/*login form*/
+.row {
+  .col-md-6 {
+    .btn-primary {
+      margin-top: 10px;
+    }
+  }
+} 
+
 /*header*/
 
 #logo {
@@ -75,6 +84,12 @@ p {
     list-style: none;
     padding-top: 5px;
     padding-left: 10px;
+  }
+  li {
+    margin: 5px;
+  }
+  .btn {
+    padding: 3px 7px;
   }
  }
 
